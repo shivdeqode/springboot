@@ -22,7 +22,7 @@ public class ProductExceptionHandler {
 
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<String> handlingProductNotFoundException(ProductNotFoundException msg) {
-        return new ResponseEntity<>("Product Not Found for the given ID:", HttpStatus.OK);
+        return new ResponseEntity<>("Product Not Found for the given ID", HttpStatus.OK);
     }
 
     @ExceptionHandler(Exception.class)

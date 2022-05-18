@@ -2,6 +2,8 @@ package com.example.controller;
 
 import java.util.List;
 
+import com.example.dto.ProductDTO;
+import com.example.exceptionHandler.ProductNotFoundException;
 import com.example.model.Product;
 import com.example.service.IProductService;
 
@@ -31,13 +33,24 @@ public class ProductController {
     }
 
     @GetMapping("getAllProducts")
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public ProductDTO getAllProducts() {
+        ProductDTO productDTO = new ProductDTO();
+        List<Product> product = productService.getAllProducts();
+        if (product.isEmpty())
+            productDTO.setMessage("No Records Found");
+        else
+            productDTO.setProduct(product);
+        return productDTO;
     }
 
     @GetMapping("getproduct/{id}")
     public Product getProductById(@PathVariable int id) {
-        return productService.getProductById(id);
+        Product product = productService.getProductById(id);
+        if (null != product) {
+            return productService.getProductById(id);
+        } else
+            throw new ProductNotFoundException("Product Not Found for the given ID");
+
     }
 
     @PutMapping("updateProduct/{id}")
@@ -48,9 +61,12 @@ public class ProductController {
     @DeleteMapping("deleteProduct/{id}")
     public String deleteProduct(@PathVariable int id) {
 
-        productService.getProductById(id);
-        productService.deleteProduct(id);
-        return "entryDeleted";
+        Product product = productService.getProductById(id);
+        if (null != product) {
+            productService.deleteProduct(id);
+            return "entry Deleted";
+        } else
+            throw new ProductNotFoundException("Product Not Found for the given ID");
 
     }
 
