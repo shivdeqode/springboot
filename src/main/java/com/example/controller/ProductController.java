@@ -26,12 +26,14 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
+    // Method to save a Product
     @PostMapping("addProduct")
     public Product saveProduct(@RequestBody Product product) {
         log.info("Input JSON {}", product);
         return productService.saveOrUpdate(product);
     }
 
+    // Method to get all list of products
     @GetMapping("getAllProducts")
     public ProductDTO getAllProducts() {
         ProductDTO productDTO = new ProductDTO();
@@ -43,6 +45,7 @@ public class ProductController {
         return productDTO;
     }
 
+    // Method to get Product by id
     @GetMapping("getproduct/{id}")
     public Product getProductById(@PathVariable int id) {
         Product product = productService.getProductById(id);
@@ -53,11 +56,13 @@ public class ProductController {
 
     }
 
+    // Method to save or update product by id
     @PutMapping("updateProduct/{id}")
     public Product updateProductById(@RequestBody Product product) {
         return productService.saveOrUpdate(product);
     }
 
+    // Method to delete product by id
     @DeleteMapping("deleteProduct/{id}")
     public String deleteProduct(@PathVariable int id) {
 
