@@ -12,6 +12,7 @@ public class ProductExceptionHandler {
 
     @ExceptionHandler(JsonParseException.class)
     public ResponseEntity<String> handlingJsonParseException(JsonParseException jsonParseException) {
+       
         return new ResponseEntity<>("JSON Parse Exception Occured", HttpStatus.BAD_REQUEST);
     }
 
